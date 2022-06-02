@@ -83,7 +83,14 @@ class BasicPage extends StatelessWidget{
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: allFriend(size.width/3),
-            )
+            ),
+            Divider(),
+            sectionTileText("Mes Posts"),
+            post(time: "5 minutes", image: "images/art-1478831_1920.jpg", desc: "Petit tour"),
+            post(time: "2 jours", image: "images/6fa0afed513916e53a712f57e38292e5.jpg", desc: "Oui j'ai de la flemme",likes: 38),
+
+            post(time: "2 ans", image: "images/318875_1519215629_318809-1519118398-sante-ia.jpg", desc: "Flemme Bof bof bof bof bof ...",likes: 50,comments: 80),
+
 
 
 
@@ -171,4 +178,54 @@ class BasicPage extends StatelessWidget{
     });
         return Row(children: children,);
   }
+  
+  Container post({required String time,required String image,required String desc,int likes=0,int comments=0})
+  {
+    return Container(
+      margin: EdgeInsets.only(top: 8,left: 3,right: 3),
+      padding: EdgeInsets.all(10),
+      decoration:BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: Color.fromRGBO(225, 255, 225,1),
+      ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              myProfile(20),
+              Padding(padding: EdgeInsets.only(left: 8)),
+              Text("Prince Gédéon"),
+              Spacer(),
+              timeText(time),
+            ],
+          ),
+          Padding(padding: EdgeInsets.only(top: 8,bottom: 8,)
+          ,child: Image.asset(image,fit: BoxFit.cover,),),
+
+          Text(desc,style: TextStyle(
+            color: Colors.lightBlueAccent,
+
+          ),
+          textAlign: TextAlign.center,),
+          Divider(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Icon(Icons.favorite),
+              Text('$likes likes'),
+              Icon(Icons.message),
+              Text("$comments Commentaires")
+            ],
+          )
+         
+        ],
+      ),
+    );
+  }
+Text timeText(String time)
+{
+  return Text("Il y a $time",style: TextStyle(color: Colors.blue),);
 }
+}
+
