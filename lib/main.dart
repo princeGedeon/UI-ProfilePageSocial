@@ -1,3 +1,4 @@
+import 'package:exercice_basics/post.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -23,6 +24,15 @@ class MyApp extends StatelessWidget {
 }
 
 class BasicPage extends StatelessWidget{
+
+  List<Post> posts=[
+    Post(name: "Prince Gédéon", time: "5 minutes", desc: "Petit tour", imagePath: "images/art-1478831_1920.jpg"),
+    Post(name: "Eren Yaeger", time: "2 jours", desc: "Flemme", imagePath: "images/6fa0afed513916e53a712f57e38292e5.jpg"),
+    Post(name: "Prince yager", time: "2 ans", desc: "BofBof", imagePath: "images/318875_1519215629_318809-1519118398-sante-ia.jpg")
+  ];
+
+
+
   @override
   Widget build(BuildContext context) {
     var size=MediaQuery.of(context).size;
@@ -86,11 +96,7 @@ class BasicPage extends StatelessWidget{
             ),
             Divider(),
             sectionTileText("Mes Posts"),
-            post(time: "5 minutes", image: "images/art-1478831_1920.jpg", desc: "Petit tour"),
-            post(time: "2 jours", image: "images/6fa0afed513916e53a712f57e38292e5.jpg", desc: "Oui j'ai de la flemme",likes: 38),
-
-            post(time: "2 ans", image: "images/318875_1519215629_318809-1519118398-sante-ia.jpg", desc: "Flemme Bof bof bof bof bof ...",likes: 50,comments: 80),
-
+            allPost(),
 
 
 
@@ -178,8 +184,18 @@ class BasicPage extends StatelessWidget{
     });
         return Row(children: children,);
   }
+
+  Column allPost(){
+    List <Widget> postToAdd=[];
+    posts.forEach((element) {
+      postToAdd.add(post(post: element));
+    });
+    return Column(
+      children: postToAdd,
+    );
+  }
   
-  Container post({required String time,required String image,required String desc,int likes=0,int comments=0})
+  Container post({required Post post})
   {
     return Container(
       margin: EdgeInsets.only(top: 8,left: 3,right: 3),
@@ -194,15 +210,15 @@ class BasicPage extends StatelessWidget{
             children: [
               myProfile(20),
               Padding(padding: EdgeInsets.only(left: 8)),
-              Text("Prince Gédéon"),
+              Text(post.name),
               Spacer(),
-              timeText(time),
+              timeText(post.setTime()),
             ],
           ),
           Padding(padding: EdgeInsets.only(top: 8,bottom: 8,)
-          ,child: Image.asset(image,fit: BoxFit.cover,),),
+          ,child: Image.asset(post.imagePath,fit: BoxFit.cover,),),
 
-          Text(desc,style: TextStyle(
+          Text(post.desc,style: TextStyle(
             color: Colors.lightBlueAccent,
 
           ),
@@ -213,9 +229,9 @@ class BasicPage extends StatelessWidget{
             mainAxisSize: MainAxisSize.max,
             children: [
               Icon(Icons.favorite),
-              Text('$likes likes'),
+              Text(post.setLikes()),
               Icon(Icons.message),
-              Text("$comments Commentaires")
+              Text(post.setComments())
             ],
           )
          
